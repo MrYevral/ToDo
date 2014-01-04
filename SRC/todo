@@ -1,6 +1,6 @@
 #!/bin/bash
 # The first argument is the date the item is due.
-# print this out to see that it is working properly
+# 
 # Is the first argument a command?  Commands so far are ls
 if [ $# == 0 ]
 then
@@ -27,5 +27,11 @@ else
 fi
 # Now collect the input
 task=$(cat)
+# Pick out the next serial number and increment it.
+serial=$(cat .todo_number)
+(( serial++ ))
+fnx=$(echo -n 0000$serial | tail -c 3)
+dd=$dd#$fnx
 # and save into file named after the given date in private directory
 echo "$task" >"todo_dir/$dd"
+echo $serial >.todo_number
