@@ -1,9 +1,25 @@
 #!/bin/bash
 # The first argument is the date the item is due.
 # print this out to see that it is working properly
-
+# Is the first argument a command?  Commands so far are ls
+if [ $# == 0 ]
+then
+    set -- ls
+fi
+if [ "$1" == "ls" ]
+then
+    FILES="todo_dir/*"
+    for f in $FILES
+    do
+        fn=$(basename $f)
+        echo -n $fn ">> "
+        head -1 $f
+    done
+    exit
+fi
 dd=$(date +%Y-%m-%d_%R --date="$1")
-if [ $? == 0 ]; then
+if [ $? == 0 ]
+then
     echo $dd
 else
     echo "Didn't understand the date"
@@ -12,4 +28,4 @@ fi
 # Now collect the input
 task=$(cat)
 # and save into file named after the given date in private directory
-echo $task >"todo_dir/$dd"
+echo "$task" >"todo_dir/$dd"

@@ -1,0 +1,19 @@
+Name todo
+
+
+Example: todo "3 weeks"
+
+data is read from stdin until an EOF (^d) is found.  All the data
+is stored in a file whose name is the calculated date for completion
+of the task.
+
+One command has been added so far:
+
+Usage:  todo ls
+
+This lists out the due date followed by the title line (first line) of the task.
+
+Note: todo with no parameters is the same as todo ls
+
+
+
