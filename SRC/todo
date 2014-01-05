@@ -17,7 +17,7 @@ then
     do
         fn=$(basename $f)
         echo -n $fn
-        tn=$(echo $fn | head -c 10)
+        tn=${fn: 0: 10}
         if [[ $tn < $today ]]
         then
             echo -n ' << '
@@ -58,7 +58,8 @@ task=$(cat)
 # Pick out the next serial number and increment it.
 serial=$(cat $dir/.todo_number)
 (( serial++ ))
-fnx=$(echo -n 0000$serial | tail -c 3)
+fnx=000$serial
+fnx=${fnx: -3: 3}
 dd=$dd#$fnx
 # and save into file named after the given date in private directory
 echo "$task" >"$dir/$dd"
