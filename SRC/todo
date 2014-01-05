@@ -1,6 +1,10 @@
 #!/bin/bash
-# The first argument is the date the item is due.
 # 
+# Set dir to the directory where everything is kept
+# This directory must contain a .todo_number file containing the next number to be issued.
+dir=~/ToDo/SRC/todo_dir
+
+today=$(date +%Y-%m-%d)
 # Is the first argument a command?  Commands so far are ls
 if [ $# == 0 ]
 then
@@ -8,15 +12,39 @@ then
 fi
 if [ "$1" == "ls" ]
 then
-    FILES="todo_dir/*"
+    FILES="$dir/*"
     for f in $FILES
     do
         fn=$(basename $f)
-        echo -n $fn ">> "
+        echo -n $fn
+        tn=$(echo $fn | head -c 10)
+        if [[ $tn < $today ]]
+        then
+            echo -n ' << '
+        elif [[ $tn == $today ]]
+        then
+            echo -n ' == '
+        else
+            echo -n ' >> '
+        fi
         head -1 $f
     done
     exit
+elif [ "$1" == "cat" ]
+then
+    cat $dir/*#$2
+    exit $?
+elif [ "$1" == "vi" ]
+then
+    vi $dir/*#$2
+    exit $?
+elif [ "$1" == "rm" ]
+then
+    rm $dir/*#$2
+    exit $?
 fi
+
+# The first argument is the date the item is due.
 dd=$(date +%Y-%m-%d_%R --date="$1")
 if [ $? == 0 ]
 then
@@ -28,10 +56,10 @@ fi
 # Now collect the input
 task=$(cat)
 # Pick out the next serial number and increment it.
-serial=$(cat .todo_number)
+serial=$(cat $dir/.todo_number)
 (( serial++ ))
 fnx=$(echo -n 0000$serial | tail -c 3)
 dd=$dd#$fnx
 # and save into file named after the given date in private directory
-echo "$task" >"todo_dir/$dd"
-echo $serial >.todo_number
+echo "$task" >"$dir/$dd"
+echo $serial >$dir/.todo_number

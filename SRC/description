@@ -16,4 +16,8 @@ This lists out the due date followed by the title line (first line) of the task.
 Note: todo with no parameters is the same as todo ls
 
 
+commands added
 
+cat <number> - print the contents of the task file to stdout
+vi  <number> - edit the task file in vi
+rm  <number> - delete the task file
