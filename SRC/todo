@@ -10,8 +10,8 @@ if [ $# == 0 ]
 then
     set -- ls
 fi
-if [ "$1" == "ls" ]
-then
+case $1 in
+ls | l)
     FILES="$dir/*"
     for f in $FILES
     do
@@ -30,19 +30,24 @@ then
         head -1 $f
     done
     exit
-elif [ "$1" == "cat" ]
-then
+;;
+cat)
     cat $dir/*#$2
     exit $?
-elif [ "$1" == "vi" ]
-then
-    vi $dir/*#$2
+;;
+catf)
+    sed '1!s/^/    /' $dir/*#$2
     exit $?
-elif [ "$1" == "rm" ]
-then
+;;
+vi | emacs )
+    $1 $dir/*#$2
+    exit $?
+;;
+rm)
     rm $dir/*#$2
     exit $?
-fi
+;;
+esac
 
 # The first argument is the date the item is due.
 dd=$(date +%Y-%m-%d_%R --date="$1")

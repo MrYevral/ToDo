@@ -18,6 +18,8 @@ Note: todo with no parameters is the same as todo ls
 
 commands added
 
-cat <number> - print the contents of the task file to stdout
-vi  <number> - edit the task file in vi
-rm  <number> - delete the task file
+cat  <number> - print the contents of the task file to stdout
+catf <number> - a very crudely formatted task file to stdout
+vi   <number> - edit the task file in vi.  (Can also use emacs or other editors.)
+l             - the same as ls
+rm   <number> - delete the task file
