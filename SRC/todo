@@ -16,18 +16,26 @@ ls | l)
     for f in $FILES
     do
         fn=$(basename $f)
-        echo -n $fn
-        tn=${fn: 0: 10}
-        if [[ $tn < $today ]]
+
+        if [ ${fn: 0: ${#2} } == $2 ]
         then
-            echo -n ' << '
-        elif [[ $tn == $today ]]
-        then
-            echo -n ' == '
-        else
-            echo -n ' >> '
+            tn=${fn: 0: 10}
+            if [[ $tn < $today ]]
+            then
+                gap=' << '
+            elif [[ $tn == $today ]]
+            then
+                gap=' == '
+                [ -z $eqHad ] && echo
+                eqHad=1
+            else
+                gap=' >> '
+                [ -z $gtHad ] && echo
+                gtHad=1
+            fi
+            title=$(head -1 $f)
+            echo $fn $gap $title
         fi
-        head -1 $f
     done
     exit
 ;;

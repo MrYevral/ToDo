@@ -7,11 +7,6 @@ data is read from stdin until an EOF (^d) is found.  All the data
 is stored in a file whose name is the calculated date for completion
 of the task.
 
-One command has been added so far:
-
-Usage:  todo ls
-
-This lists out the due date followed by the title line (first line) of the task.
 
 Note: todo with no parameters is the same as todo ls
 
@@ -21,5 +16,6 @@ commands added
 cat  <number> - print the contents of the task file to stdout
 catf <number> - a very crudely formatted task file to stdout
 vi   <number> - edit the task file in vi.  (Can also use emacs or other editors.)
+ls   <part_date> - This lists out the due date followed by the title line (first line) of the task, for dates matching part_date.
 l             - the same as ls
 rm   <number> - delete the task file
